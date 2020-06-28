@@ -1,25 +1,36 @@
 package com.magnus.btc
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_compras.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.fab_add
+import kotlinx.android.synthetic.main.activity_main.rv_dados
+import kotlinx.android.synthetic.main.activity_main.txtMsg
+import java.text.DateFormat
+import java.util.*
 
 class ComprasActivity : AppCompatActivity() {
-    private var AtivoList = mutableListOf<ComprasParce>()
+    private var AtivoList = mutableListOf<Compra>()
     var nome = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compras)
-        val ativo = intent.getParcelableExtra<Ativos_parce>("ativos")
+        val ativo = intent.getParcelableExtra<Ativo>("ativos")
          nome = ativo.nome.toString()
-        Log.v("LOG", "Teste do nome = " + nome)
+
+
             fab_add.setOnClickListener(View.OnClickListener {
 
+
+                var enviarNome = Nome(ativo.nome)
+                Log.v("NOME", "Teste do nome1 = " + enviarNome)
                 val it = Intent(this, SaveComprasActivity::class.java)
+                it.putExtra("nomeAtivo" , enviarNome)
                 startActivity(it)
             })
             initRecyclerView()
@@ -42,10 +53,10 @@ class ComprasActivity : AppCompatActivity() {
         }
 
         private fun update() {
-            val compraDao = ComprasDao(this)
+            val compraDao = ComprasDAO(this)
             AtivoList.clear()
             AtivoList = compraDao.selectNome(nome)
-
+            txt_quantidade.text = compraDao.selectSoma(nome).toString()
 
             if (AtivoList.isEmpty()) {
                 rv_dados.setVisibility(View.GONE)

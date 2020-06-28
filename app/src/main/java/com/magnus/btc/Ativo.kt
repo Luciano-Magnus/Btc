@@ -1,14 +1,38 @@
-package com.example.myapplication
+package com.magnus.btc
 
-     val NOME_TABELA = "ativos"
-        val ID_COLUMN = "id_ativos"
-        val CODIGO_COLUMN = "codigo"
-        val NOME_COLUMN = "nome"
-        val QTD_COLUMN = "qtd"
+import android.os.Parcel
+import android.os.Parcelable
 
-     val TABELA_COMPRA = "compras"
-        val ID_COMPRA = "id_compra"
-        val NOME_COMPRA = "nome_compra"
-        val QTD_COMPRA = "qtd_compra"
-        val DATA_COMPRA = "data_compra"
-        val VALOR_COMPRA = "valor_compra"
+ data class Ativo(var id: Int?, val nome: String?, val codigo: String?, var qtd: Double?):Parcelable{
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readDouble()
+
+    )
+
+
+     override fun writeToParcel(parcel: Parcel, flags: Int) {
+         this!!.id?.let { parcel.writeInt(it) }
+        parcel.writeString(nome)
+         parcel.writeString(codigo)
+         if (qtd != null) {
+             parcel.writeDouble(qtd!!)
+         }
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Ativo> {
+        override fun createFromParcel(parcel: Parcel): Ativo {
+            return Ativo(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Ativo?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

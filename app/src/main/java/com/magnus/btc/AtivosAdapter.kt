@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.ativos_item.view.*
 
-class AtivosAdapter (private val ativos: List<Ativos_parce>):
+class AtivosAdapter (private val ativos: List<Ativo>):
     RecyclerView.Adapter<AtivosAdapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {

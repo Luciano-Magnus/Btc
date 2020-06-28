@@ -3,13 +3,13 @@ package com.magnus.btc
 import android.os.Parcel
 import android.os.Parcelable
 
-data class ComprasParce(var id: Int?, val nome:String?, val data: String?, val qtd: Int?, var valor: Int?):Parcelable{
+data class Compra(var id: Int?, val nome:String?, val data: String?, val qtd: Double?, var valor: Double?):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readInt(),
-        parcel.readInt()
+        parcel.readDouble(),
+        parcel.readDouble()
 
     )
 
@@ -19,10 +19,10 @@ data class ComprasParce(var id: Int?, val nome:String?, val data: String?, val q
         parcel.writeString(nome)
         parcel.writeString(data)
         if (qtd != null) {
-            parcel.writeInt(qtd)
+            parcel.writeDouble(qtd)
         }
         if (valor != null) {
-            parcel.writeInt(valor!!)
+            parcel.writeDouble(valor!!)
         }
     }
 
@@ -30,12 +30,12 @@ data class ComprasParce(var id: Int?, val nome:String?, val data: String?, val q
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Ativos_parce> {
-        override fun createFromParcel(parcel: Parcel): Ativos_parce {
-            return Ativos_parce(parcel)
+    companion object CREATOR : Parcelable.Creator<Ativo> {
+        override fun createFromParcel(parcel: Parcel): Ativo {
+            return Ativo(parcel)
         }
 
-        override fun newArray(size: Int): Array<Ativos_parce?> {
+        override fun newArray(size: Int): Array<Ativo?> {
             return arrayOfNulls(size)
         }
     }
