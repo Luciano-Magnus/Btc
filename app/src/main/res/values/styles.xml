@@ -8,16 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="pais">
+    <style name="ativos">
         <item name="android:textSize">28sp</item>
         <item name="fontFamily">sans-serif-black</item>
         <item name="android:textColor">#2D2C46</item>
     </style>
 
+    <style name="qtds">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">sans-serif-black</item>
+        <item name="android:textColor">#2C4638</item>    </style>
+
     <style name="textos">
         <item name="android:textSize">15sp</item>
         <item name="fontFamily">sans-serif-black</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">#000</item>
     </style>
 
 </resources>

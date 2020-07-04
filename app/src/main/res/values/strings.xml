@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Btc</string>
+    <string name="qtd">Valor investido</string>
+    <string name="cadastro_compra">Cadastrar compra</string>
+    <string name="cadastro_ativo">Cadastro de Ativos</string>
+    <string name="qtd_total">Valor total R$</string>
+    <string name="variacao">Variação</string>
+    <string name="qtd_ativos">Quantidade comprada</string>
 </resources>

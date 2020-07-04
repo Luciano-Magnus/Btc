@@ -9,14 +9,13 @@ import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
-import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.Charset
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
-object BoletimAtivosHTTP {
+object MoedaAtivosHTTP {
 
     val url ="https://www.mercadobitcoin.net/api/"
 
@@ -42,17 +41,32 @@ object BoletimAtivosHTTP {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun loadState(moeda:String): BoletimAtivos? {
+    fun loadMoeda(): ArrayList<MoedaAtivos>? {
         try {
-            val connection = connect(url+moeda+"/ticker/")
-            val responseCode = connection.responseCode
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                val inputStream = connection.inputStream
-                val jsonString = streamToString(inputStream)
-                val jsonO = JSONObject(jsonString)
-                val json = jsonO.getJSONObject("ticker")
-                return readBoletins(json)
+            var ativo = ArrayList<MoedaAtivos>()
+            val moedas: List<String> = ArrayList(
+                Arrays.asList(
+                    "BTC",
+                    "LTC",
+                    "XRP",
+                    "BCH",
+                    "ETH"
+                )
+            )
+
+            for ( i in 0..4) {
+
+                var connection = connect(url + moedas[i] + "/ticker/")
+                var responseCode = connection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val inputStream = connection.inputStream
+                    val jsonString = streamToString(inputStream)
+                    val jsonO = JSONObject(jsonString)
+                    val json = jsonO.getJSONObject("ticker")
+                    readMoedas(json)?.let { ativo.add(it) }
+                }
             }
+                return ativo
         } catch (e: Exception) {
             Log.e("ERRO", e.message)
             e.printStackTrace()
@@ -63,11 +77,11 @@ object BoletimAtivosHTTP {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun readBoletins(json: JSONObject): BoletimAtivos? {
+    fun readMoedas(json: JSONObject): MoedaAtivos? {
         try {
              //var jsonArray = JSONArray(json)
 
-                val boletim = BoletimAtivos(
+                val boletim = MoedaAtivos(
                     json.getString("high"),
                     json.getString("low"),
                     json.getString("vol"),

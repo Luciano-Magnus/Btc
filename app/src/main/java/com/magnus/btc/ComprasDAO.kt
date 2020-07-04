@@ -47,6 +47,22 @@ class ComprasDAO(context: Context) {
         return compra
     }
 
+    fun selectQtd(nome:String): Double {
+        Log.v("LOG", "GetAll")
+        val db = banco.writableDatabase
+        val sql = "SELECT * from " + TABELA_COMPRA +" where $NOME_COMPRA like '%$nome%' "
+        Log.v("LOG", "" + sql)
+        val cursor = db.rawQuery(sql, null)
+        var qtd = 0.0
+        while (cursor.moveToNext()) {
+            val compras = compraFromCursor(cursor)
+            qtd += compras.qtd!!
+        }
+        cursor.close()
+        db.close()
+        return qtd
+    }
+
     fun selectTotal() : Double{
         Log.v("LOG", "GetAll")
         val db = banco.writableDatabase

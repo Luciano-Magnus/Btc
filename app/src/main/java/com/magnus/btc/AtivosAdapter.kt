@@ -37,15 +37,14 @@ class AtivosAdapter (private val ativos: List<Ativo>):
 
 
         var ativo = ativos[position]
-        holder.txtQuantidade.text= ativo.codigo.toString()
+        holder.txtCodigo.text= ativo.codigo.toString()
         holder.txtMoeda.text= ativo.nome.toString()
-        holder.txtQtd.text = ativo.qtd.toString()
+
     }
 
     class VH(itenView: View): RecyclerView.ViewHolder(itenView){
 
-        var txtQuantidade:TextView=itenView.txt_quantidade
+        var txtCodigo:TextView=itenView.txt_quantidade
         var txtMoeda:TextView = itenView.txtmoeda
-        var txtQtd:TextView = itemView.txt_preco
     }
 }

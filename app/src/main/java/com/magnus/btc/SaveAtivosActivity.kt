@@ -16,19 +16,16 @@ class SaveAtivosActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     View.OnClickListener {
     var nome = ""
     var codigo = ""
-    var qtd = null
+    var qtd = 0.0
     var id_ativo: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
-        val cliente = intent.getParcelableExtra<Ativo>("cliente")
         val spinner = findViewById<Spinner>(R.id.dropDown)
 
 
         FABBack.setOnClickListener(View.OnClickListener {
 
-            var ativoDao = AtivosDAO(this)
-            ativoDao.delete(cliente)
             onBackPressed()
         })
 
@@ -63,7 +60,7 @@ class SaveAtivosActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         })
 
-        var listaDeItens = arrayOf(" Bitcoin", "Litecoin", "BCash", "XRP (Ripple)")
+        var listaDeItens = arrayOf(" Bitcoin", "Litecoin", "BCash", "XRP (Ripple)", "Ethereum")
         spinner!!.setOnItemSelectedListener(this)
         val escolha = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaDeItens)
         escolha.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -76,6 +73,7 @@ class SaveAtivosActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             nome = "Bitcoin"
             codigo = "BTC"
             id_ativo = 1
+
         }
         if (posicao == 1) {
             txt_moeda.text = "Litecoin"
@@ -94,6 +92,12 @@ class SaveAtivosActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             nome = "XRP"
             codigo = "XRP"
             id_ativo = 4
+        }
+        if (posicao == 4) {
+            txt_moeda.text = "Ethereum"
+            nome = "Ethereum"
+            codigo = "ETH"
+            id_ativo = 5
         }
     }
 

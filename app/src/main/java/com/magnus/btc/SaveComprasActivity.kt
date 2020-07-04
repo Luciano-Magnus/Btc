@@ -35,7 +35,15 @@ class SaveComprasActivity : AppCompatActivity() {
         if (compra.nome.equals("BCash")) {
             codigo = "BCH"
         }
+        if(compra.nome.equals("Ethereum")){
+            codigo = "ETH"
+        }
         CarregaDados()
+
+        FABBack.setOnClickListener({
+            onBackPressed()
+        })
+
 
         FABSave.setOnClickListener {
 
@@ -81,7 +89,7 @@ class SaveComprasActivity : AppCompatActivity() {
 
     fun CarregaDados() {
         if (asyncTask == null) {
-            if (BoletimAtivosHTTP.hasConnection(this)) {
+            if (MoedasComprasHTTP.hasConnection(this)) {
                 if (asyncTask?.status != AsyncTask.Status.RUNNING) {
                     asyncTask = StatesTask()
                     asyncTask?.execute()
@@ -91,7 +99,7 @@ class SaveComprasActivity : AppCompatActivity() {
     }
 
     @SuppressLint("StaticFieldLeak")
-    inner class StatesTask : AsyncTask<Void, Void, BoletimAtivos?>() {
+    inner class StatesTask : AsyncTask<Void, Void, MoedasCompras?>() {
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -100,25 +108,24 @@ class SaveComprasActivity : AppCompatActivity() {
 
         @SuppressLint("WrongThread")
         @RequiresApi(Build.VERSION_CODES.O)
-        override fun doInBackground(vararg params: Void?): BoletimAtivos? {
-            return BoletimAtivosHTTP.loadState(codigo)
+        override fun doInBackground(vararg params: Void?): MoedasCompras? {
+            return MoedasComprasHTTP.loadMoedas(codigo)
         }
 
 
-        private fun update(result: BoletimAtivos?) {
-
+        private fun update(result: MoedasCompras?) {
+        var df = DecimalFormat("#0.00")
             if (result != null) {
-                textView2.text = result.buy
                valor = result.buy.toDouble()
                 }
-
+            txt_valor.text = "R$ "+df.format(valor)
 
             asyncTask = null
         }
 
-        override fun onPostExecute(result: BoletimAtivos?) {
+        override fun onPostExecute(result: MoedasCompras?) {
             super.onPostExecute(result)
-            update(result as BoletimAtivos?)
+            update(result as MoedasCompras?)
         }
     }
 

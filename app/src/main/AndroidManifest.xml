@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SaveComprasActivity"></activity>
         <activity android:name=".ComprasActivity" />
-        <activity android:name=".UpdateActivity"/>
         <activity android:name=".SaveAtivosActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.ativos_item.view.*
-import kotlinx.android.synthetic.main.ativos_item.view.txt_preco
 import kotlinx.android.synthetic.main.ativos_item.view.txt_quantidade
 import kotlinx.android.synthetic.main.ativos_item.view.txtmoeda
 import kotlinx.android.synthetic.main.compras_item.view.*
+import java.text.DecimalFormat
 
 class CompraAdapter (private val ativos: List<Compra>):
     RecyclerView.Adapter<CompraAdapter.VH>() {
@@ -35,9 +35,8 @@ class CompraAdapter (private val ativos: List<Compra>):
     override fun onBindViewHolder(holder: VH, position: Int) {
         Log.v("LOG", "ViewHolder")
 
-
         var ativo = ativos[position]
-        holder.txtQuantidade.text= "Quantidade = "+ativo.qtd.toString()
+        holder.txtQuantidade.text ="Quantidade = "+ativo.qtd.toString()
         holder.txtMoeda.text= ativo.nome.toString()
         holder.txtPreco.text = "Preço = "+ativo.valor.toString()
         holder.txtData.text = ativo.data

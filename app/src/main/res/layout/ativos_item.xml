@@ -9,8 +9,8 @@
     android:layout_marginEnd="10dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="323dp"
+        android:layout_height="51dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,11 +40,11 @@
 
             <TextView
                 android:id="@+id/txtmoeda"
-                style="@style/pais"
-                android:layout_width="120dp"
+                style="@style/ativos"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -52,25 +52,14 @@
 
             <TextView
                 android:id="@+id/txt_quantidade"
-                style="@style/textos"
+                style="@style/ativos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Quantidade = 10"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="8dp"
+                android:text="BTC"
                 app:layout_constraintStart_toEndOf="@+id/view2"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_preco"
-                style="@style/textos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Preço médio = 400000"
-                app:layout_constraintStart_toEndOf="@+id/view2"
-                app:layout_constraintTop_toBottomOf="@+id/txt_quantidade" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

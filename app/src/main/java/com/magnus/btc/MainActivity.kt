@@ -4,30 +4,34 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.DecimalFormat
+
 
 class MainActivity : AppCompatActivity() {
 
     private var AtivoList = mutableListOf<Ativo>()
     private var asyncTask: StatesTask? = null
-    var codigo : String = ""
-    var valor = 0.0
-    var n1 = 0.0
-    var n2 = 0.0
+    var valorLTC = 0.0
+    var valorBTC = 0.0
+    var valorXRP = 0.0
+    var valorBCH = 0.0
+    var valorETH = 0.0
+    var qtdBTC = 0.0
+    var qtdLTC = 0.0
+    var qtdBCH =0.0
+    var qtdXRP = 0.0
+    var qtdETH = 0.0
+    var total = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //Falta somar os valores da api pra ver a valorização dos ativos
-        codigo = "LTC"
-        CarregaDados()
-
-
 
         fab_add.setOnClickListener(View.OnClickListener {
 
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(it)
         })
         initRecyclerView()
-
+        CarregaDados()
     }
 
     private fun initRecyclerView() {
@@ -47,12 +51,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun update() {
+        val df = DecimalFormat ("#0.00")
         val ativoDao = AtivosDAO(this)
         AtivoList.clear()
         AtivoList = ativoDao.select()
         val compraDao = ComprasDAO(this)
-        val total = compraDao.selectTotal()
-        txt_total.text = total.toString()
+        total = compraDao.selectTotal()
+        qtdBTC = compraDao.selectQtd("Bitcoin")
+        qtdLTC = compraDao.selectQtd("Litecoin")
+        qtdBCH = compraDao.selectQtd("BCash")
+        qtdXRP = compraDao.selectQtd("XRP")
+        qtdETH = compraDao.selectQtd("Ethereum")
+        txt_total.text = getResources().getString(R.string.qtd) + " = "  + df.format(total)
 
 
         if (AtivoList.isEmpty()) {
@@ -80,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     fun CarregaDados() {
         if (asyncTask == null) {
-            if (BoletimAtivosHTTP.hasConnection(this)) {
+            if (MoedaAtivosHTTP.hasConnection(this)) {
                 if (asyncTask?.status != AsyncTask.Status.RUNNING) {
                     asyncTask = StatesTask()
                     asyncTask?.execute()
@@ -91,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("StaticFieldLeak")
-    inner class StatesTask : AsyncTask<Void, Void, BoletimAtivos?>() {
+    inner class StatesTask : AsyncTask<Void, Void, ArrayList<MoedaAtivos>?>() {
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -100,34 +110,40 @@ class MainActivity : AppCompatActivity() {
 
         @SuppressLint("WrongThread")
         @RequiresApi(Build.VERSION_CODES.O)
-        override fun doInBackground(vararg params: Void?): BoletimAtivos? {
-            return BoletimAtivosHTTP.loadState(codigo)
+        override fun doInBackground(vararg params: Void?): ArrayList<MoedaAtivos>? {
+            return MoedaAtivosHTTP.loadMoeda()
         }
 
 
-        private fun update(result: BoletimAtivos?) {
-
+        private fun update(result: ArrayList<MoedaAtivos>?) {
+            val df = DecimalFormat("#0.00")
             if (result != null) {
-                if (codigo== "LTC") {
-                    valor = result.buy.toDouble()
-//                    txt_totalMoedas.text = valor.toString()
-                }
-                if (codigo=="BTC"){
-                    n1= result.buy.toDouble()
-                }
-                if (codigo=="XRP"){
-                    n2= result.buy.toDouble()
-                }
-                var teste = valor + n1 + n2
+
+                valorBTC = result[0].buy.toDouble()
+                valorBTC = valorBTC * qtdBTC
+                valorLTC = result[1].buy.toDouble()
+                valorLTC = valorLTC * qtdLTC
+                valorXRP = result[2].buy.toDouble()
+                valorXRP = valorXRP * qtdXRP
+                valorBCH = result[3].buy.toDouble()
+                valorBCH = valorBCH * qtdBCH
+                valorETH = valorETH * qtdETH
+
+                var valorTotal =valorBTC + valorLTC + valorBCH + valorXRP + valorETH
+                var variacao = (valorTotal / total - 1) *100
+
+                txt_totalMoedas.text = getResources().getString(R.string.qtd_total) + " = " + df.format(valorTotal)
+                txt_variacao.text = resources.getString(R.string.variacao) + " = " + df.format(variacao) + "%"
             }
-            n2= n1
 
             asyncTask = null
         }
 
-        override fun onPostExecute(result: BoletimAtivos?) {
+        override fun onPostExecute(result: ArrayList<MoedaAtivos>?) {
             super.onPostExecute(result)
-            update(result as BoletimAtivos?)
+            update(result as ArrayList<MoedaAtivos>)
+//            txt_totalMoedas.text ="valor" + valorBTC.toString()
+
         }
     }
 }

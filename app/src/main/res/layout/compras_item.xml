@@ -9,8 +9,8 @@
     android:layout_marginEnd="10dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="304dp"
-        android:layout_height="115dp"
+        android:layout_width="339dp"
+        android:layout_height="113dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,8 +40,8 @@
 
             <TextView
                 android:id="@+id/txtmoeda"
-                style="@style/pais"
-                android:layout_width="120dp"
+                style="@style/ativos"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
@@ -69,7 +69,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Preço  = 400000"
-                app:layout_constraintEnd_toEndOf="@+id/txt_quantidade"
                 app:layout_constraintStart_toEndOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/txt_quantidade" />
 

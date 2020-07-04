@@ -7,12 +7,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_compras.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.fab_add
 import kotlinx.android.synthetic.main.activity_main.rv_dados
 import kotlinx.android.synthetic.main.activity_main.txtMsg
-import java.text.DateFormat
-import java.util.*
 
 class ComprasActivity : AppCompatActivity() {
     private var AtivoList = mutableListOf<Compra>()
@@ -28,7 +25,6 @@ class ComprasActivity : AppCompatActivity() {
 
 
                 var enviarNome = Nome(ativo.nome)
-                Log.v("NOME", "Teste do nome1 = " + enviarNome)
                 val it = Intent(this, SaveComprasActivity::class.java)
                 it.putExtra("nomeAtivo" , enviarNome)
                 startActivity(it)
@@ -36,13 +32,6 @@ class ComprasActivity : AppCompatActivity() {
             initRecyclerView()
 
         }
-
-//    fun soma(): Int{
-//        val ativoDao = AtivosDao(this)
-//        val soma = ativoDao.soma()
-//        return soma
-//    }
-
 
         private fun initRecyclerView() {
             Log.v("LOG", "Inicia RecyclerView")
@@ -56,7 +45,7 @@ class ComprasActivity : AppCompatActivity() {
             val compraDao = ComprasDAO(this)
             AtivoList.clear()
             AtivoList = compraDao.selectNome(nome)
-            txt_quantidade.text = compraDao.selectSoma(nome).toString()
+            txt_quantidade.text = resources.getString(R.string.qtd_ativos) + " = " + compraDao.selectSoma(nome).toString()
 
             if (AtivoList.isEmpty()) {
                 rv_dados.setVisibility(View.GONE)
@@ -68,8 +57,6 @@ class ComprasActivity : AppCompatActivity() {
             }
             rv_dados.adapter?.notifyDataSetChanged()
         }
-
-
 
         override fun onRestart() {
             super.onRestart()

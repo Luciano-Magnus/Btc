@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class BoletimAtivos (
+class MoedasCompras (
     var high: String?,
     var low: String,
     var vol: String,
@@ -18,16 +18,6 @@ class BoletimAtivos (
 ) {
     override fun toString(): String {
         return data
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getData(data: String): String {
-        val diaString = data
-        var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        var date = LocalDate.parse(diaString)
-        var formattedDate = date.format(formatter)
-        return formattedDate
     }
 
 }
