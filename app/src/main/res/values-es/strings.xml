@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qtd">Amount invested</string>
+    <string name="cadastro_compra">Registrar compra</string>
+    <string name="cadastro_ativo">Registro de activos</string>
+    <string name="qtd_total">Cantidad total R$</string>
+    <string name="variacao">Variación</string>
+    <string name="qtd_ativos">Cantidad comprada</string>
+</resources>

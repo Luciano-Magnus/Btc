@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qtd">Amount invested</string>
+    <string name="cadastro_compra">Register Purchase</string>
+    <string name="cadastro_ativo">Asset Registration</string>
+    <string name="qtd_total">Total amount R$</string>
+    <string name="variacao">Variation</string>
+    <string name="qtd_ativos">Quantity purchased</string>
+</resources>
